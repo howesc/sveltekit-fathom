@@ -1,17 +1,20 @@
+import type { LogData } from '$lib/types';
 import { writable } from 'svelte/store';
 import { logIt } from './utils';
 
-const filename = 'stores.ts';
+const source = 'stores.ts';
 let count = 0;
 
 const createLogStore = () => {
-	const { set, subscribe, update } = writable<string>();
+	const { set, subscribe, update } = writable<LogData>();
 
 	return {
-		set: (comment: string) => {
+		set: (logData: LogData) => {
+			const timestamp = new Date();
+			const action = 'set';
 			count += 1;
-			logIt(count, new Date(), filename, comment);
-			set(comment);
+			logIt({ ...logData, count, timestamp, action });
+			set(logData);
 		},
 		subscribe,
 		update
@@ -19,4 +22,4 @@ const createLogStore = () => {
 };
 
 export const logStore = createLogStore();
-logStore.set('init');
+logStore.set({ source, comment: 'init' });

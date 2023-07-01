@@ -1,5 +1,5 @@
 import { logIt } from '$lib/utils.js';
-import type { LayoutServerLoad } from './$types';
+import type { LayoutServerLoad } from './$types'
 
 const source = '+layout.server.ts';
 let count = 0;
@@ -10,7 +10,7 @@ export const load: LayoutServerLoad = async ({ fetch, route }) => {
 		layoutServer: 'data',
 		log: logIt({
 			count,
-			routeDir: '/',
+			routeDir: '/aRoute',
 			routeId: route.id,
 			source,
 			action: 'load',

@@ -10,3 +10,12 @@ div {
 	border-radius: 0.25rem;
 	padding: 0.25rem;
 }
+
+nav {
+	background-color: #333;
+}
+
+nav > a {
+	margin-right: 2rem;
+	color: #fff;
+}

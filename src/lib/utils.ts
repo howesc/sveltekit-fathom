@@ -1,10 +1,34 @@
-const fmtDate = (d: Date) => d.toISOString().replace('T', ' ');
+import type { LogData } from '$lib/types';
 
-export const logIt = (count = 0, timestamp: Date, filename: string, comment = '') => {
-	console.log([count, fmtDate(timestamp), filename, comment].join('\t\t'));
-	return { count, timestamp: fmtDate(timestamp), filename, comment };
+const fmtDate = (d: Date) => d.toISOString().replace('T', ' ').replace('Z', '').replace('.', ' ');
+
+const toFixedLength = (val: string, len: number) =>
+	(val + Array(len).fill(' ').join('')).slice(0, len);
+
+let record = 0;
+// export const logIt = (count = 0, timestamp: Date, source: string, comment = '') => {
+export const logIt = (logData: LogData) => {
+	// if (logData.action === 'handle') console.log('handle');
+	// if (logData.action === '$navigating') console.log('$navigating');
+
+	const timestamp = logData.timestamp || new Date();
+	record += 1;
+	console.log(
+		Object.values({
+			record: toFixedLength(String(record), 4),
+			timestamp: toFixedLength(fmtDate(timestamp), 24),
+			routeDir: toFixedLength(logData.routeDir || '', 12),
+			routeId: toFixedLength(logData.routeId || '', 12),
+			source: toFixedLength(logData.source || '', 24),
+			action: toFixedLength(logData.action || '', 12),
+			count: toFixedLength(String(logData.count), 4),
+			comment: logData.comment
+		}).join('\t')
+	);
+
+	return { ...logData, timestamp };
 };
 
-const filename = 'util.ts';
+const source = 'util.ts';
 let count = 1;
-logIt(count, new Date(), filename);
+logIt({ count, source });

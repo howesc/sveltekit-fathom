@@ -1,34 +1,17 @@
 <script lang="ts">
-	import '../app.css';
-	import { navigating, page } from '$app/stores';
 	import { logStore } from '$lib/stores.js';
 	import { logIt } from '$lib/utils';
 	import { onMount } from 'svelte';
-	import Nav from '$lib/comp/Nav.svelte';
+	import { page } from '$app/stores';
 
 	export let data;
-
 	const source = '+layout.svelte';
 
-	let navigatingCount = 0;
-	// $: if($navigating?.to?.url.pathname) {
-	$: {
-		navigatingCount += 1;
-		logIt({
-			count: navigatingCount,
-			routeDir: '/',
-			routeId: $page.route.id,
-			source,
-			action: '$navigating',
-			comment: `$navigating?.to?.url.pathname: ${$navigating?.to?.url.pathname}`
-		});
-	}
-
 	$logStore = {
-		routeDir: '/',
+		routeDir: '/aRoute',
 		routeId: $page.route.id,
 		source,
-		comment: 'value set in +layout.svelte'
+		comment: 'value set in aRoute/+layout.svelte'
 	};
 
 	let onMountCount = 0;
@@ -37,7 +20,7 @@
 		logIt({
 			count: onMountCount,
 			timestamp: new Date(),
-			routeDir: '/',
+			routeDir: '/aRoute',
 			routeId: $page.route.id,
 			source,
 			action: 'onMount'
@@ -46,9 +29,7 @@
 </script>
 
 <div>
-	+layout.svelte
-
-	<Nav />
+	aRoute/+layout.svelte
 
 	<pre>
     {JSON.stringify({ data }, null, 2)}
