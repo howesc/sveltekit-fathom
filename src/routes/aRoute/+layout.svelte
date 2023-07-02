@@ -7,11 +7,35 @@
 	export let data;
 	const source = '+layout.svelte';
 
+	let dataCount = 0;
+	$: {
+		dataCount += 1;
+		logIt({
+			count: dataCount,
+			routeDir: '/aRoute',
+			routeId: $page.route.id,
+			source,
+			action: 'data',
+			comment: `Reactive. Renders without triggering onMount.`
+		});
+	}
+
+	let renderingCount = 0;
+	renderingCount += 1;
+	logIt({
+		count: renderingCount,
+		routeDir: '/aRoute',
+		routeId: $page.route.id,
+		source,
+		action: 'rendering',
+		comment: 'First static code runs in sequence.'
+	});
+
 	$logStore = {
 		routeDir: '/aRoute',
 		routeId: $page.route.id,
 		source,
-		comment: 'value set in aRoute/+layout.svelte'
+		comment: 'Static code runs in sequence.'
 	};
 
 	let onMountCount = 0;
@@ -23,8 +47,19 @@
 			routeDir: '/aRoute',
 			routeId: $page.route.id,
 			source,
-			action: 'onMount'
+			action: 'onMount',
+			comment: 'onMount runs AFTER static and reactive code.'
 		});
+	});
+
+	renderingCount += 1;
+	logIt({
+		count: renderingCount,
+		routeDir: '/aRoute',
+		routeId: $page.route.id,
+		source,
+		action: 'rendering',
+		comment: 'Last static code runs in sequence.'
 	});
 </script>
 

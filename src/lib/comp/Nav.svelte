@@ -5,6 +5,16 @@
 
 	const source = 'Nav.svelte';
 
+	let renderingCount = 0;
+	renderingCount += 1;
+	logIt({
+		count: renderingCount,
+		routeId: $page.route.id,
+		source,
+		action: 'rendering',
+		comment: 'Start rendering'
+	});
+
 	let onMountCount = 0;
 	onMount(() => {
 		onMountCount += 1;
@@ -16,6 +26,15 @@
 			source,
 			action: 'onMount'
 		});
+	});
+
+	renderingCount += 1;
+	logIt({
+		count: renderingCount,
+		routeId: $page.route.id,
+		source,
+		action: 'rendering',
+		comment: 'Start rendering'
 	});
 </script>
 

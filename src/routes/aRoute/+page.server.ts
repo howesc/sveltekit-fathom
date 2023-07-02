@@ -1,10 +1,10 @@
 import { logIt } from '$lib/utils.js';
-import type { PageServerLoad } from './$types'
+import type { PageServerLoad } from './$types';
 
 const source = '+page.server.ts';
 let count = 0;
 
-export const load:PageServerLoad = async ({ route, fetch }) => {
+export const load: PageServerLoad = async ({ route, fetch }) => {
 	count += 1;
 	return {
 		pageServer: 'data',
@@ -15,8 +15,8 @@ export const load:PageServerLoad = async ({ route, fetch }) => {
 			source,
 			action: 'load',
 			comment:
-				'Superseded by (NOT merged with) +page.ts data. Merges with layout or layoutServer data. Re-runs on nav hover to own route ONLY.'
+				'Re-runs on page load ONLY. Superseded by +page.ts data - NOT merged with it. Merges with layout or layoutServer data.'
 		}),
-		api: await (await fetch(`/api?searchParam=${source}`)).json()
+		api: await (await fetch(`/api/aRoute-page`)).json()
 	};
 };

@@ -15,13 +15,13 @@ export const logIt = (logData: LogData) => {
 	record += 1;
 	console.log(
 		Object.values({
-			record: toFixedLength(String(record), 4),
 			timestamp: toFixedLength(fmtDate(timestamp), 24),
+			record: toFixedLength(String(record), 4),
+			count: toFixedLength(String(logData.count), 4),
 			routeDir: toFixedLength(logData.routeDir || '', 12),
-			routeId: toFixedLength(logData.routeId || '', 12),
 			source: toFixedLength(logData.source || '', 24),
 			action: toFixedLength(logData.action || '', 12),
-			count: toFixedLength(String(logData.count), 4),
+			routeId: toFixedLength(logData.routeId || '', 12),
 			comment: logData.comment
 		}).join('\t')
 	);
@@ -31,4 +31,4 @@ export const logIt = (logData: LogData) => {
 
 const source = 'util.ts';
 let count = 1;
-logIt({ count, source });
+logIt({ count, source, comment: 'Load BASE modules.' });
